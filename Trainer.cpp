@@ -100,6 +100,7 @@ void Trainer::StartMoving(Point2D dest)
 void Trainer::StartMovingToGym(PokemonGym* gym)
 {
     SetupDestination(gym->GetLocation());
+    current_gym = gym;
     if(state == FAINTED)
     {
         cout << display_code << id_num << ": My Pokemon have fainted so I can't move to gym... " << endl;
@@ -120,6 +121,7 @@ void Trainer::StartMovingToGym(PokemonGym* gym)
 void Trainer::StartMovingToCenter(PokemonCenter* center)
 {
     SetupDestination(center->GetLocation());
+    current_center = center;
     if(state == FAINTED)
     {
         cout << display_code << id_num << ": My pokemon have fainted so I should have gone to the center.." << endl;

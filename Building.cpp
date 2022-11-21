@@ -3,10 +3,14 @@
 #include <math.h>
 
 #include "Building.h"
-#include "GameObject.h"
-#include "Point2D.h"
 
 using namespace std;
+
+//destructor:
+Building::~Building()
+{
+    cout << "Building destructed" << endl;
+}
 
 //default constructor for class Building
 Building::Building() : GameObject('B')

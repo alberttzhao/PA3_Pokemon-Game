@@ -24,6 +24,7 @@ public:
     //default constructor:
     PokemonGym();
 
+    //deconstuctor:
     ~PokemonGym();
 
     //param constructor:

@@ -5,6 +5,11 @@
 
 using namespace std;
 
+//deconstructor:
+GameObject::~GameObject()
+{
+    cout << "GameObject destructed" << endl;
+}
 
 GameObject::GameObject(char in_code)
 {
@@ -23,12 +28,6 @@ GameObject::GameObject(Point2D in_loc, int in_id, char in_code)
     cout << "GameObject constructed" << endl;
 }
 
-//deconstructor:
-GameObject::~GameObject()
-{
-    cout << "GameObject destructed" << endl;
-}
-
 Point2D GameObject::GetLocation()
 {  
     return location;
@@ -44,9 +43,11 @@ char GameObject::GetState()
     return display_code;
 }
 
+//make ShowStatus to be virtual: 
 void GameObject::ShowStatus()
 {
     cout << display_code << id_num << " at " << location << endl;
     return;
 }
+
 

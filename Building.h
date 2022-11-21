@@ -12,6 +12,9 @@ private:
 
 public: 
 
+    //destructor:
+    virtual ~Building();
+
     Building();
     Building(char in_code, int in_Id, Point2D in_loc);
 

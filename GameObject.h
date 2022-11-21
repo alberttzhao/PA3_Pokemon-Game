@@ -2,6 +2,8 @@
 #pragma once
 
 #include "Point2D.h"
+#include "GameObject.h"
+#include "Point2D.h"
 
 class GameObject
 {
@@ -19,8 +21,14 @@ public:
     Point2D GetLocation();
     int GetId();
     char GetState();
-    void ShowStatus();
+    virtual void ShowStatus(); //declare show status to be virtual
 
     //GameObject deconstructor:
-    ~GameObject();
+    virtual ~GameObject();
+
+    //bool Update():
+    //virtual:
+    virtual bool Update() = 0;
+    virtual bool ShouldBeVisible() = 0;
+
 };

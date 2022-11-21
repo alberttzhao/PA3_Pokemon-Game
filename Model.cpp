@@ -109,7 +109,31 @@ PokemonGym* Model::GetPokemonGymPtr(int id)
     }
 }
 
-bool Trainer::Update()
+bool Model::Update()
 {
-    
+    //increment time:
+    time = time + 1;
+
+    for(int i = 0; i < sizeof(object_ptrs); i++)
+    {
+        if(object_ptrs[i]->Update() == true)
+        {
+            return true;
+        }
+    }
+    return false;
 }
+
+/*
+void Model::Display(View& view)
+{
+
+}
+
+void Model::ShowStatus()
+{
+
+}
+*/
+
+

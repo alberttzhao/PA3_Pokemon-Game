@@ -23,6 +23,7 @@ public:
 
     PokemonCenter(int in_id, double potion_cost, unsigned int potion_cap, Point2D in_loc);
 
+    //deconstructor:
     ~PokemonCenter();
 
     bool HasPotions();
