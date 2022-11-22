@@ -51,3 +51,18 @@ void GameObject::ShowStatus()
 }
 
 
+//instruction from view:
+//don't know if this is correct:
+void GameObject::DrawSelf(char* ptr)
+{
+    //write:
+    //display_code = *ptr;
+
+
+    *ptr = display_code;
+
+    id_num = '0' + id_num;
+    *(ptr + 1) = id_num;
+}
+
+

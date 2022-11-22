@@ -2,7 +2,11 @@
 #pragma once
 
 #include <iostream>
+#include <stdio.h>  
+#include <stdlib.h> 
+#include <time.h>  
 #include <string>
+#include <random>
 #include "GameObject.h"
 #include "Point2D.h"
 #include "Vector2D.h"

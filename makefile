@@ -1,6 +1,6 @@
 CC=g++ -std=c++11 -g
 
-OBJS= TestCheckPoint4.o Point2D.o Vector2D.o GameObject.o Building.o PokemonCenter.o PokemonGym.o Trainer.o Model.o GameCommand.o
+OBJS= main.o Point2D.o Vector2D.o GameObject.o Building.o PokemonCenter.o PokemonGym.o Trainer.o Model.o GameCommand.o View.o
 
 default: PA3
 
@@ -31,11 +31,14 @@ Trainer.o: Trainer.cpp Trainer.h GameObject.h Point2D.h Vector2D.h PokemonCenter
 Model.o: Model.cpp Model.h Point2D.h Vector2D.h GameObject.h Building.h PokemonCenter.h PokemonGym.h Trainer.h
 	$(CC) -c Model.cpp -o Model.o
 
-GameCommand.o: GameCommand.cpp GameCommand.h Model.h GameObject.h Trainer.h PokemonGym.h PokemonCenter.h Point2D.h Vector2D.h Building.h
+GameCommand.o: GameCommand.cpp GameCommand.h Model.h GameObject.h Trainer.h PokemonGym.h PokemonCenter.h Point2D.h Vector2D.h Building.h View.h
 	$(CC) -c GameCommand.cpp -o GameCommand.o
 
-checkpoint4: TestCheckPoint4.cpp Point2D.o Vector2D.o GameObject.o Building.o PokemonCenter.o PokemonGym.o Trainer.o Model.0 GameCommand.o
-	$(CC) -o checkpoint3.exe TestCheckPoint3.cpp Point2D.o Vector2D.o GameObject.o Building.o PokemonCenter.o PokemonGym.o Trainer.o Model.o GameCommand.o
+View.o: View.cpp View.h GameObject.h Point2D.h
+	$(CC) -c View.cpp -o View.o 
+
+main.o: main.cpp Building.h Point2D.h Vector2D.h GameCommand.h PokemonCenter.h Model.h Trainer.h PokemonGym.h GameObject.h View.h
+	$(CC) -c main.cpp -o main.o
 
 
 clean: 

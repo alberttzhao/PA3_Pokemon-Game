@@ -1,5 +1,7 @@
 
 #include "GameCommand.h"
+#include <stdio.h>
+#include <string.h>
 
 /*
 void DoMoveCommand(Model& model, int trainer_id, Point2D p1);
@@ -12,34 +14,6 @@ void DoAdvanceCommand(Model& model, View& view);
 void DoRunCommand(Model& model, View& view);
 */
 
-// void GetInformationFromPlayer()
-// {
-//     string line;
-//     char command;
-//     int id1;
-//     int id2;
-//     int position_x;
-//     int position_y;
-
-//     cout << "Enter the game command: ", cin >> line;
-//     command = line[0];
-
-//     switch(command)
-//     {
-//         case 'm':
-//             id1 = line[2];
-//             position_x = line[4];
-//             position_y = line[6];
-//             break;
-//         case 'c':
-//             id1 = line[2];
-//             id2 = line[4];
-//         default:
-//             cout << "Invalid Command!" << endl;
-//             break;
-//     }
-
-// }
 
 
 void DoMoveCommand(Model& model, int trainer_id, Point2D p1)
@@ -145,5 +119,17 @@ void DoBattleCommand(Model& model, int trainer_id, unsigned int battles)
     }
  }
 
+void DoAdvanceCommand(Model& model, View& view)
+{
+    model.Update();
+    model.Display(view);
+    cout << "Advancing one tick" << endl;
+}
 
+void DoRunCommand(Model& model, View& view)
+{
+    model.Update();
+    model.Display(view);
+    cout << "Advancing to next event" << endl;
+}
 

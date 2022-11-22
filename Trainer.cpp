@@ -238,49 +238,49 @@ void Trainer::ShowStatus()
             cout << "stopped" << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 1:
             cout << "moving at a speed of " << speed << " to destination " << destination << " at each step of " << delta << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 6:
             cout << "heading to PokemonGym " << current_gym->GetId() << " at a speed of " << speed << " at each step of " << delta << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 5:
             cout << "heading to Pokemon Center " << current_center->GetId() << " at a speed of " << speed << " at each step of " << delta << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 4:
             cout << "inside PokemonGym " << current_gym->GetId() << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 3:
             cout << "inside PokemonCenter " << current_center->GetId() << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 7:
             cout << "battling in PokemonGym " << current_gym->GetId() << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
         case 8:
             cout << "recovering health in Pokemon Center " << current_center->GetId() << endl;
             cout << "Health: " << health << endl;
             cout << "PokeDollars: " << PokeDollars << endl;
-            cout << "Experience: " << experience; 
+            cout << "Experience: " << experience << endl;
             break;
     }
 }
@@ -400,6 +400,8 @@ bool Trainer::UpdateLocation()
     else
     {
         location = location + delta;
+        PokeDollars = PokeDollars + GetRandomAmountOfPokeDollars(); //should be right? get random dollar everytime the trainer takes a step
+        health = health - 1; //lose one health everytime you move
         cout << display_code << id_num << ": step..." << endl;
         return false;
     }
@@ -411,3 +413,11 @@ string Trainer::GetName()
 }
 
 
+//get random amount of PokeDollar everytime the trainer takes a step:
+//non-member function:
+double GetRandomAmountOfPokeDollars()
+{
+    srand(time(NULL));
+    float rando = static_cast<float>(rand()) / static_cast<float>(RAND_MAX/2.0);
+    return rando;
+}

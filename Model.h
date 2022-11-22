@@ -6,6 +6,7 @@
 #include "PokemonCenter.h"
 #include "PokemonGym.h"
 #include "Point2D.h"
+#include "View.h"
 
 using namespace std;
 
@@ -38,7 +39,7 @@ public:
     PokemonGym* GetPokemonGymPtr(int id);
 
     bool Update();
-    //void Display(View& view);
+    void Display(View& view);
     void ShowStatus();
     
 };

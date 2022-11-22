@@ -63,6 +63,8 @@ Model::Model()
 
     cout << "Model default constructed" << endl;
 
+    ShowStatus();
+
 }
 
 Model::~Model()
@@ -121,22 +123,51 @@ bool Model::Update()
             return true;
         }
     }
+
+    //write two more for loops and use exit(0):
+    for(int j = 0; j < num_gyms; j++)
+    {
+        if(gym_ptrs[j]->passed() == true)
+        {
+            cout << "GAME OVER: You win! All battles done! " << endl;
+            exit(0);
+        }
+    }
+
+    for(int k = 0; k < num_trainers; k++)
+    {
+        if(trainer_ptrs[k]->HasFainted() == true)
+        {
+            cout << "GAME OVER: You lose! All of your Trainers' Pokemon have fainted! " << endl;
+            exit(0);
+        }
+    }
+
     return false;
 }
 
 
 
-// void Model::Display(View& view)
-// {
+void Model::Display(View& view)
+{
 
-// }
+    view.Clear();
+
+    for(int i = 0; i < num_objects; i++)
+    {
+        view.Plot(object_ptrs[i]);
+    }
+
+    view.Draw();
+}
 
 
 void Model::ShowStatus(){
 
     cout << "Time: " << time << endl; 
 
-    for (int i = 0; i < num_objects; i++){
+    for (int i = 0; i < num_objects; i++)
+    {
         object_ptrs[i]->ShowStatus();
     }
 }

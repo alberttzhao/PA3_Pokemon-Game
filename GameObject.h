@@ -31,4 +31,8 @@ public:
     virtual bool Update() = 0;
     virtual bool ShouldBeVisible() = 0;
 
+    //from view:
+    void DrawSelf(char *ptr);
+
+    
 };
