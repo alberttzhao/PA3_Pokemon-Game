@@ -44,6 +44,7 @@ public:
     bool ShouldBeVisible();
     void ShowStatus();
     bool Update();
+    string GetName();
 
     //destructor:
     ~Trainer();

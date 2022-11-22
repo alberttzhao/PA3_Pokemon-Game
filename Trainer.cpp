@@ -405,4 +405,9 @@ bool Trainer::UpdateLocation()
     }
 }
 
+string Trainer::GetName()
+{
+    return name;
+}
+
 

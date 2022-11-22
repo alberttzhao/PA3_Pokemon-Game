@@ -124,16 +124,22 @@ bool Model::Update()
     return false;
 }
 
-/*
-void Model::Display(View& view)
-{
 
+
+// void Model::Display(View& view)
+// {
+
+// }
+
+
+void Model::ShowStatus(){
+
+    cout << "Time: " << time << endl; 
+
+    for (int i = 0; i < num_objects; i++){
+        object_ptrs[i]->ShowStatus();
+    }
 }
 
-void Model::ShowStatus()
-{
-
-}
-*/
 
 
