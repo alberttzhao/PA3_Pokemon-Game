@@ -22,13 +22,9 @@ int main()
     bool continue_loop = true;
     Model model;
 
+    //displaying initial view:
     View view;
     model.Display(view);
-    // View view;
-
-
-    // model.Display(view);
-    // view.Draw();
 
 
     while(continue_loop == true)
@@ -57,6 +53,7 @@ int main()
             cin >> id1;
             cin >> id2;
             DoMoveToCenterCommand(model, id1, id2);
+
             break;
         }
         case 'g':
@@ -89,10 +86,14 @@ int main()
         case 'a':
         {
             // DoAdvance command
+            DoAdvanceCommand(model, view);
+            break;
         }
         case 'r':
         {
             // run: advnace on-time step by updating each object once;
+            DoRunCommand(model, view);
+            break;
         }
         case 'q':
         {

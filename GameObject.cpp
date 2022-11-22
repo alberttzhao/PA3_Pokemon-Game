@@ -55,14 +55,10 @@ void GameObject::ShowStatus()
 //don't know if this is correct:
 void GameObject::DrawSelf(char* ptr)
 {
-    //write:
-    //display_code = *ptr;
+    ptr[0] = display_code;
 
-
-    *ptr = display_code;
-
-    id_num = '0' + id_num;
-    *(ptr + 1) = id_num;
+    char id_num_in_char = '0' + id_num;
+    ptr[1] = id_num_in_char;
 }
 
 

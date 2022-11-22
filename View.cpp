@@ -91,6 +91,8 @@ void View::Draw()
         }
         cout << endl;
     }
+    
+    cout << endl;
 }
 
 bool View::GetSubscripts(int &out_x, int &out_y, Point2D location)

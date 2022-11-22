@@ -75,10 +75,10 @@ Model::~Model()
 
 Trainer* Model::GetTrainerPtr(int id)
 {
-    if(trainer_ptrs[id] != NULL)
+    if(trainer_ptrs[id-1] != NULL)
     {
         //return if pointer is found:
-        return trainer_ptrs[id];
+        return trainer_ptrs[id-1];
     }
     else
     {
@@ -89,9 +89,9 @@ Trainer* Model::GetTrainerPtr(int id)
 
 PokemonCenter* Model::GetPokemonCenterPtr(int id)
 {
-    if(center_ptrs[id] != NULL)
+    if(center_ptrs[id-1] != NULL)
     {
-        return center_ptrs[id];
+        return center_ptrs[id-1];
     }
     else
     {
@@ -101,9 +101,9 @@ PokemonCenter* Model::GetPokemonCenterPtr(int id)
 
 PokemonGym* Model::GetPokemonGymPtr(int id)
 {
-    if(gym_ptrs[id] != NULL)
+    if(gym_ptrs[id-1] != NULL)
     {
-        return gym_ptrs[id];
+        return gym_ptrs[id-1];
     }
     else
     {
@@ -116,7 +116,7 @@ bool Model::Update()
     //increment time:
     time = time + 1;
 
-    for(int i = 0; i < sizeof(object_ptrs); i++)
+    for(int i = 0; i < num_objects; i++)
     {
         if(object_ptrs[i]->Update() == true)
         {

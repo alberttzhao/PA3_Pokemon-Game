@@ -121,9 +121,10 @@ void DoBattleCommand(Model& model, int trainer_id, unsigned int battles)
 
 void DoAdvanceCommand(Model& model, View& view)
 {
-    model.Update();
-    model.Display(view);
     cout << "Advancing one tick" << endl;
+    model.Update();
+    model.ShowStatus();
+    model.Display(view);
 }
 
 void DoRunCommand(Model& model, View& view)

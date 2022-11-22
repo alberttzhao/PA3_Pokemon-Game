@@ -82,7 +82,7 @@ void Trainer::SetupDestination(Point2D dest)
 void Trainer::StartMoving(Point2D dest)
 {
     SetupDestination(dest);
-    if(GetDistanceBetween(location, destination) == 0) //apparently this would not work
+    if(GetDistanceBetween(location, destination) == 0.0) //apparently this would not work
     {
         cout << display_code << id_num << ": I'm already there. See?" << endl;
     }
@@ -105,7 +105,7 @@ void Trainer::StartMovingToGym(PokemonGym* gym)
     {
         cout << display_code << id_num << ": My Pokemon have fainted so I can't move to gym... " << endl;
     }
-    else if(GetDistanceBetween(location, destination) == 0)
+    else if(GetDistanceBetween(location, destination) == 0.0)
     {
         state = IN_GYM;
         current_gym = gym;
@@ -129,7 +129,7 @@ void Trainer::StartMovingToCenter(PokemonCenter* center)
     else if(GetDistanceBetween(location, destination) == 0)
     {
         state = AT_CENTER;
-        current_center = center;
+        //current_center = center;
         cout << display_code << id_num << ": I am already at the Center! " << endl;
     }
     else
@@ -400,6 +400,7 @@ bool Trainer::UpdateLocation()
     else
     {
         location = location + delta;
+
         PokeDollars = PokeDollars + GetRandomAmountOfPokeDollars(); //should be right? get random dollar everytime the trainer takes a step
         health = health - 1; //lose one health everytime you move
         cout << display_code << id_num << ": step..." << endl;

@@ -111,7 +111,7 @@ bool PokemonCenter::Update()
 //finished but need to check if it is correct
 void PokemonCenter::ShowStatus()
 {
-    cout << "PokemonCenter Status: ";
+    cout << "PokemonCenter Status: " << endl;
     Building::ShowStatus();
     cout << "PokeDollars per potion: " << pokedollar_cost_per_potion << endl;
     if(num_potions_remaining <= 1)
