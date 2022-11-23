@@ -35,9 +35,9 @@ void View::Plot(GameObject *ptr)
 
     ptr->DrawSelf(selfptr);
 
-    if(GetSubscripts(x, y, ptr->GetLocation()))
+    if(GetSubscripts(x, y, ptr->GetLocation()) && (ptr->ShouldBeVisible() == true))
     {
-        if (grid[x][y][0] != '.' && *selfptr != 't')
+        if (grid[x][y][0] != '.' && *selfptr != 't') 
         {
             grid[x][y][0] = '*';
             grid[x][y][1] = ' ';
@@ -91,9 +91,10 @@ void View::Draw()
         }
         cout << endl;
     }
-    
+
     cout << endl;
 }
+
 
 bool View::GetSubscripts(int &out_x, int &out_y, Point2D location)
 {

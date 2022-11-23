@@ -223,8 +223,8 @@ bool Trainer::HasFainted()
 {
     if(health == 0)
     {
+        state = FAINTED; 
         return true;
-        state = FAINTED; //newly added
     }
     else
         return false;
@@ -304,6 +304,9 @@ void Trainer::ShowStatus()
             cout << "PokeDollars: " << PokeDollars << endl;
             cout << "Experience: " << experience << endl;
             break;
+        case 2:
+            cout << "fainted" << endl;
+            
     }
 }
 
@@ -458,7 +461,7 @@ bool Trainer::UpdateLocation()
         if(health != 0){
             health = health - 1; //lose one health everytime you move
         }
-        
+
         cout << display_code << id_num << ": step..." << endl;
         return false;
     }
