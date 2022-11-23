@@ -134,13 +134,19 @@ bool Model::Update()
         }
     }
 
+    int num_trainers_fainted = 0;
     for(int k = 0; k < num_trainers; k++)
     {
         if(trainer_ptrs[k]->HasFainted() == true)
-        {
-            cout << "GAME OVER: You lose! All of your Trainers' Pokemon have fainted! " << endl;
-            exit(0);
+        {   
+            num_trainers_fainted = num_trainers_fainted + 1;
         }
+    }
+
+    if(num_trainers_fainted == num_trainers)
+    {
+        cout << "GAME OVER: You lose! All of your Trainers' Pokemon have fainted! " << endl;
+        exit(0);
     }
 
     return false;

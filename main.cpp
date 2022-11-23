@@ -37,6 +37,7 @@ int main()
         Point2D position1;
 
         cout << "Enter the game command: ", cin >> command;
+        cout << "______________________" << endl;
 
         switch (command)
         {
@@ -91,14 +92,21 @@ int main()
         }
         case 'r':
         {
-            // run: advnace on-time step by updating each object once;
+            // run: advnace on-time step by updating each object once;           
             DoRunCommand(model, view);
             break;
         }
         case 'q':
         {
             // quit: terminate the program
-            cout << "Program Terminated" << endl;
+            model.GetTrainerPtr(1)->~Trainer();
+            model.GetTrainerPtr(2)->~Trainer();
+            model.GetPokemonCenterPtr(1)->~PokemonCenter();
+            model.GetPokemonCenterPtr(2)->~PokemonCenter();
+            model.GetPokemonGymPtr(1)->~PokemonGym();
+            model.GetPokemonGymPtr(2)->~PokemonGym();
+
+            cout << "*** Program Terminated ***" << endl;
             exit(0);
             break;
         }

@@ -28,6 +28,7 @@ Trainer::Trainer() : GameObject('B') //verify this later
     current_gym = NULL;
     //destination;
     //delta;
+    //state = STOPPED; //newly added...don't know if this works or if it is necessary
 }
 
 Trainer::Trainer(char in_code) : GameObject(in_code)
@@ -48,6 +49,7 @@ Trainer::Trainer(char in_code) : GameObject(in_code)
     current_gym = NULL;
     //destination;
     //delta;
+    //state = STOPPED; 
 }
 
 Trainer::Trainer(string in_name, int in_id, char in_code, unsigned int in_speed, Point2D in_loc) : GameObject(in_loc, in_id, in_code)
@@ -69,6 +71,7 @@ Trainer::Trainer(string in_name, int in_id, char in_code, unsigned int in_speed,
     current_gym = NULL;
     //destination;
     //delta;
+    //state = STOPPED;
 }
 
 
@@ -82,7 +85,7 @@ void Trainer::SetupDestination(Point2D dest)
 void Trainer::StartMoving(Point2D dest)
 {
     SetupDestination(dest);
-    if(GetDistanceBetween(location, destination) == 0.0) //apparently this would not work
+    if(GetDistanceBetween(location, destination) == 0.0) 
     {
         cout << display_code << id_num << ": I'm already there. See?" << endl;
     }
@@ -114,6 +117,7 @@ void Trainer::StartMovingToGym(PokemonGym* gym)
     else
     {
         state = MOVING_TO_GYM;
+        current_gym = gym; //testing
         cout << display_code << id_num << ": on my way to gym " <<  gym->GetId() << endl;
     }
 }
@@ -126,15 +130,17 @@ void Trainer::StartMovingToCenter(PokemonCenter* center)
     {
         cout << display_code << id_num << ": My pokemon have fainted so I should have gone to the center.." << endl;
     }
-    else if(GetDistanceBetween(location, destination) == 0)
+    else if(GetDistanceBetween(location, destination) == 0.0)
     {
         state = AT_CENTER;
-        //current_center = center;
+        current_center = center;
         cout << display_code << id_num << ": I am already at the Center! " << endl;
+
     }
     else
     {
         state = MOVING_TO_CENTER;
+        current_center = center;
         cout << display_code << id_num << ": On my way to Center " << center->GetId() << endl;
     }
 }
@@ -142,13 +148,13 @@ void Trainer::StartMovingToCenter(PokemonCenter* center)
 
 void Trainer::StartBattling(unsigned int num_battles)
 {
-    if(state == FAINTED)
-    {
-        cout << display_code << id_num << ": My Pokemon have fainted so no more battles for me... " << endl;
-    }
-    else if(state != IN_GYM)
+    if(state != IN_GYM)
     {
         cout << display_code << id_num << ": I can only battle in a PokemonGym!" << endl;
+    }
+    else if(state == FAINTED)
+    {
+        cout << display_code << id_num << ": My Pokemon have fainted so no more battles for me... " << endl;
     }
     else if(PokeDollars < current_gym->GetPokeDollarCost(num_battles)) //?
     {
@@ -160,7 +166,11 @@ void Trainer::StartBattling(unsigned int num_battles)
     }
     else
     {
+        //is_IN_GYM = true;
+
         state = BATTLING_IN_GYM;
+        cout << display_code << id_num << ": started to battle at the PokemonGym " << current_gym->GetId() << " with " << num_battles << " battles" << endl;
+
         battles_to_buy = num_battles; //?
         //need to add: update the remaining battles in the gym . This will be used when its Update() function is called.
     }
@@ -169,27 +179,36 @@ void Trainer::StartBattling(unsigned int num_battles)
 void Trainer::StartRecoveringHealth(unsigned int num_potions)
 {
 
-    if(current_center->CanAffordPotion(num_potions , PokeDollars) == false)
+    if(state != AT_CENTER)
+    {
+        cout << display_code << id_num << ": I can only recover health at a Pokemon Center! " << endl;
+        return;
+    }
+    else if(current_center->CanAffordPotion(num_potions , PokeDollars) == false)
     {
         cout << display_code << id_num << ": Not enough money to recover health. " << endl;
+        return;
     }
     else if(current_center->HasPotions() == false)
     {
         cout << display_code << id_num << ": Cannot recover! No potion remaining in this Pokemon Center " << endl;
-    }
-    else if(state != AT_CENTER)
-    {
-        cout << display_code << id_num << ": I can only recover health at a Pokemon Center! " << endl;
+        return;
     }
     else
     {
+        state = RECOVERING_HEALTH;
+        cout << display_code << id_num << ": Started recovering " << num_potions << " potions at Pokemon Center " << current_center->GetId() << endl;
         //the trainer can start recovering health
         //potions_to_buy = num_potions;
         //need to add: update the remaining potions in the center. This will be used when its Update() function is called
         
         //add 5 health for every potion used:
-        unsigned int potions_to_buy = current_center->DistributePotion(num_potions);
+
+        potions_to_buy = current_center->DistributePotion(num_potions); //this is good
+
         health = health + (5 * potions_to_buy); //?
+
+        return;
     }
 }
 
@@ -203,7 +222,10 @@ void Trainer::Stop()
 bool Trainer::HasFainted()
 {
     if(health == 0)
+    {
         return true;
+        state = FAINTED; //newly added
+    }
     else
         return false;
 }
@@ -291,9 +313,13 @@ bool Trainer::Update()
     switch(state)
     {
         case 0: //stopped
+        {
             return false;
             break;
+        } 
+
         case 1: //moving
+        {
             if(UpdateLocation() == true) //? 
             {
                 state = STOPPED;
@@ -306,9 +332,14 @@ bool Trainer::Update()
                 return false; 
                 break;
             }
+        }
+
         case 6: //moving_to_gym
+        {
             if(UpdateLocation() == true)
             {
+                current_gym->AddOneTrainer(); //testing...worked!!
+
                 state = IN_GYM;
                 return true;
                 break;
@@ -319,9 +350,14 @@ bool Trainer::Update()
                 return false;
                 break;
             }
+        }
+
         case 5: //moving to center
+        {
             if(UpdateLocation() == true)
             {
+                current_center->AddOneTrainer(); //testing...worked!!
+
                 state = AT_CENTER;
                 return true;
                 break;
@@ -332,12 +368,20 @@ bool Trainer::Update()
                 return false;
                 break;
             }
+        }
+
         case 4: //in gymn
+        {
             return false;
             break;
+        }  
+
         case 3: //at center
+        {
             return false;
             break;
+        }
+
         case 7: //battling in gym
         {
             unsigned int current_health_cost =  current_gym->GetHealthCost(battles_to_buy);
@@ -347,7 +391,7 @@ bool Trainer::Update()
             PokeDollars = PokeDollars - current_dollar_cost;
 
             unsigned int current_experience_gain = current_gym->TrainPokemon(battles_to_buy);
-            experience = experience - current_experience_gain;
+            experience = experience + current_experience_gain;
 
             if(battles_to_buy <= 1)
                 cout << "** " << name << " completed " << battles_to_buy << " battle! **" << endl;
@@ -357,21 +401,25 @@ bool Trainer::Update()
             cout << "** " << name << " gained " << current_experience_gain << " experiences! **" << endl;
 
             state = IN_GYM;
+            //state = BATTLING_IN_GYM;
             return true;
             break;
         }
 
         case 8: //recovering_health
         {
+
             unsigned int healthpoints_recovered = potions_to_buy * 5;
             
-
             unsigned int current_dollar_cost = current_center->GetPokeDollarCost(potions_to_buy);
+
             PokeDollars = PokeDollars - current_dollar_cost;
 
-            cout << "** " << name << " recovered " << healthpoints_recovered << " experiences! **" << endl;
+            cout << "** " << name << " recovered " << healthpoints_recovered << " health! **" << endl;
             if(potions_to_buy <= 1)
+            {
                 cout << "** " << name << " bought " << potions_to_buy << " potion! **" << endl;
+            }
             else 
                 cout << "** " << name << " bought " << potions_to_buy << " potions! **" << endl;
 
@@ -379,8 +427,12 @@ bool Trainer::Update()
             return true;
             break;  
         }
+
         default:
+        {
+            state = STOPPED;
             return false;
+        }
     }
 }
 
@@ -391,7 +443,7 @@ bool Trainer::Update()
 bool Trainer::UpdateLocation()
 //update the location while the object is moving
 {
-    if((fabs(destination.x - location.x) < delta.x) && (fabs(destination.y - location.y) < delta.y))
+    if((fabs(destination.x - location.x) <= fabs(delta.x)) && (fabs(destination.y - location.y) <= fabs(delta.y)))
     {
         cout << display_code << id_num << ": I'm there!" << endl;
         location = destination; //? don't know if I have to do location.x = destination.x or not
@@ -402,7 +454,11 @@ bool Trainer::UpdateLocation()
         location = location + delta;
 
         PokeDollars = PokeDollars + GetRandomAmountOfPokeDollars(); //should be right? get random dollar everytime the trainer takes a step
-        health = health - 1; //lose one health everytime you move
+
+        if(health != 0){
+            health = health - 1; //lose one health everytime you move
+        }
+        
         cout << display_code << id_num << ": step..." << endl;
         return false;
     }
@@ -414,11 +470,25 @@ string Trainer::GetName()
 }
 
 
-//get random amount of PokeDollar everytime the trainer takes a step:
-//non-member function:
+// //get random amount of PokeDollar everytime the trainer takes a step:
+// //non-member function:
+// double GetRandomAmountOfPokeDollars()
+// {
+// 	srand((unsigned) time(NULL));
+
+//     float random = 1.0 + (rand() % 10.0);
+
+//     return rando;
+// }
+
+
+//non-member function
 double GetRandomAmountOfPokeDollars()
 {
-    srand(time(NULL));
-    float rando = static_cast<float>(rand()) / static_cast<float>(RAND_MAX/2.0);
-    return rando;
-}
+    srand (time (NULL) );
+    float low_offet = 5.0; //change values later!!!!!
+    float high_offet = 10.0; //change values later!!!!
+    float random_PokeDollar = low_offet + static_cast<float>(rand()) * static_cast<float>(high_offet - low_offet) / RAND_MAX;
+
+    return random_PokeDollar;
+} 

@@ -96,7 +96,15 @@ void DoBattleCommand(Model& model, int trainer_id, unsigned int battles)
     {
         model.GetTrainerPtr(trainer_id)->StartBattling(battles);
 
-        cout << model.GetTrainerPtr(trainer_id)->GetName() << " is battling. " << endl; 
+        if((model.GetTrainerPtr(trainer_id)->GetState()) == BATTLING_IN_GYM)
+        {
+            cout << model.GetTrainerPtr(trainer_id)->GetName() << " is battling. " << endl; 
+        }
+        else
+        {
+            return;
+        }
+
         
         return;
     }
@@ -113,7 +121,14 @@ void DoBattleCommand(Model& model, int trainer_id, unsigned int battles)
     {
         model.GetTrainerPtr(trainer_id)->StartRecoveringHealth(potions_needed);
 
-        cout << "Recovering " << model.GetTrainerPtr(trainer_id)->GetName() << "'s Pokemon's health. " << endl;
+        if(model.GetTrainerPtr(trainer_id)->GetState() == RECOVERING_HEALTH)
+        {
+            cout << "Recovering " << model.GetTrainerPtr(trainer_id)->GetName() << "'s Pokemon's health. " << endl;
+        }
+        else
+        {
+            return;
+        }
 
         return;
     }
@@ -129,8 +144,12 @@ void DoAdvanceCommand(Model& model, View& view)
 
 void DoRunCommand(Model& model, View& view)
 {
-    model.Update();
-    model.Display(view);
     cout << "Advancing to next event" << endl;
+
+    for(int i = 0; i < 5; i++)
+    {
+        model.Update();
+    }
+    model.Display(view);
 }
 

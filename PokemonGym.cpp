@@ -68,14 +68,14 @@ bool PokemonGym::IsAbleToBattle(unsigned int battle_qty, double budget, unsigned
 //what? 
 unsigned int PokemonGym::TrainPokemon(unsigned int battle_units)
 {
-    if(battle_units > num_battle_remaining)
-    {
-        return num_battle_remaining * experience_per_battle;
-    }
-    else
+    if(num_battle_remaining > battle_units)
     {
         num_battle_remaining = num_battle_remaining - battle_units;
         return battle_units * experience_per_battle;
+    }
+    else
+    {
+        return num_battle_remaining * experience_per_battle;
     }
 
 }
