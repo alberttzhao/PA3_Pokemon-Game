@@ -80,6 +80,16 @@ void Trainer::SetupDestination(Point2D dest)
 {
     destination = dest;
     delta = (dest - location) * (speed / GetDistanceBetween(dest , location));
+
+    if(state == AT_CENTER)
+    {
+        current_center->RemoveOneTrainer();
+    }
+
+    if(state == IN_GYM)
+    {
+        current_gym->RemoveOneTrainer();
+    }
 }
 
 void Trainer::StartMoving(Point2D dest)
@@ -170,6 +180,7 @@ void Trainer::StartBattling(unsigned int num_battles)
 
         state = BATTLING_IN_GYM;
         cout << display_code << id_num << ": started to battle at the PokemonGym " << current_gym->GetId() << " with " << num_battles << " battles" << endl;
+
 
         battles_to_buy = num_battles; //?
         //need to add: update the remaining battles in the gym . This will be used when its Update() function is called.

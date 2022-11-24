@@ -101,7 +101,7 @@ bool View::GetSubscripts(int &out_x, int &out_y, Point2D location)
     out_x = (location.x - origin.x) / scale;
     out_y = (location.y - origin.y) / scale;
 
-    if (out_x > view_maxsize && out_y > view_maxsize)
+    if (out_x > view_maxsize || out_y > view_maxsize)
     {
         cout << "An Object is oustside the display " << endl;
         return false;

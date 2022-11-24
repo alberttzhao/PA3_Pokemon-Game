@@ -100,12 +100,7 @@ void DoBattleCommand(Model& model, int trainer_id, unsigned int battles)
         {
             cout << model.GetTrainerPtr(trainer_id)->GetName() << " is battling. " << endl; 
         }
-        else
-        {
-            return;
-        }
-
-        
+    
         return;
     }
 }

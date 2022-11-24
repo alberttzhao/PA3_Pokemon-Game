@@ -43,7 +43,7 @@ Model::Model()
     Point2D G1_initial_location;
     G1_initial_location.x = 0;
     G1_initial_location.y = 0;
-    PokemonGym* gym1_ptr = new PokemonGym(10, 1, 2, 3, 1, G1_initial_location);
+    PokemonGym* gym1_ptr = new PokemonGym(2, 1, 2, 3, 1, G1_initial_location); //remember to change it back to 10
     object_ptrs[4] = gym1_ptr;
     gym_ptrs[0] = gym1_ptr;
 
@@ -51,7 +51,7 @@ Model::Model()
     Point2D G2_initial_location;
     G2_initial_location.x = 5;
     G2_initial_location.y = 5;
-    PokemonGym* gym2_ptr = new PokemonGym(20, 5, 7.5, 4, 2, G2_initial_location);
+    PokemonGym* gym2_ptr = new PokemonGym(2, 5, 7.5, 4, 2, G2_initial_location); // remember to change it back to 20
     object_ptrs[5] = gym2_ptr;
     gym_ptrs[1] = gym2_ptr;
 
@@ -120,19 +120,27 @@ bool Model::Update()
     {
         if(object_ptrs[i]->Update() == true)
         {
-            return true;
+            //write two more for loops and use exit(0):
+        int num_gyms_without_battles = 0;
+        for(int j = 0; j < num_gyms; j++)
+        {
+            if(gym_ptrs[j]->passed() == true)
+            {
+                num_gyms_without_battles = num_gyms_without_battles + 1;
+            }
         }
-    }
 
-    //write two more for loops and use exit(0):
-    for(int j = 0; j < num_gyms; j++)
-    {
-        if(gym_ptrs[j]->passed() == true)
+        if(num_gyms_without_battles == num_gyms)
         {
             cout << "GAME OVER: You win! All battles done! " << endl;
             exit(0);
         }
+        
+        return true;
+        }
+
     }
+
 
     int num_trainers_fainted = 0;
     for(int k = 0; k < num_trainers; k++)
